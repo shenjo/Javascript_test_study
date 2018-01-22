@@ -1,0 +1,19 @@
+# IDE config
+/**/.idea
+
+# node modules
+
+/**/node_modules
+
+
+# package-lock
+
+/**/package-lock.json
+
+# nyc output
+
+/**/.nyc_output
+
+# test report folder
+
+/**/test/**/reports
