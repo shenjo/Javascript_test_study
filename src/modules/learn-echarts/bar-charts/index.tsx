@@ -5,10 +5,7 @@ export default function BarCharts () {
   const divRef = useRef<HTMLDivElement>(null);
   // const data
   useEffect(() => {
-    const chart = echarts.init(divRef.current!, '', {
-      width: 400,
-      height: 400
-    });
+    const chart = echarts.init(divRef.current!, '', );
     chart.setOption({
       // dataSet
       xAxis: { type: 'category' },
