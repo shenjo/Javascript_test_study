@@ -23,7 +23,8 @@
     "incremental": true
   },
   "include": [
-    "src",
+    "client",
+    "server",
     "types"
   ],
   "references": [

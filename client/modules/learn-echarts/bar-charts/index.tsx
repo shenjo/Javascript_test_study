@@ -29,7 +29,7 @@ export default function BarCharts () {
       },
       series: [{
         type: 'bar',
-        stack:'x',
+        // stack:'x',
         encode: {
           x: ['label'],
           y: 'temp'
@@ -43,7 +43,7 @@ export default function BarCharts () {
         }
       }, {
         type: 'bar',
-        stack:'x',
+        // stack:'x',
         // yAxisIndex: 1,
         encode: {
           x: 'label',
