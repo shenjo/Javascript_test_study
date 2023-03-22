@@ -117,7 +117,7 @@ function Senior4 () {
 
   const dataset = employeeNames.map(item => {
     return {
-      source: data.filter(i => i.name === item.group).map(item => ({ label: item.product, value: item.price }))
+      source: data.filter((i: any) => i.name === item.group).map((item: any) => ({ label: item.product, value: item.price }))
     };
   });
 
