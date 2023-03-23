@@ -34,14 +34,14 @@ export default function Index () {
     const year = dayjs(current.time).format('YYYY');
     const record = result.find((i: any) => i.year === year);
     if (record) {
-      record.price += current.price;
+      record.amount += current.price;
     } else {
-      result.push({ year: year, price: current.price });
+      result.push({ year: year, amount: current.price });
     }
     return result;
   }, []);
 
-  const senior1Series = [{ type: 'bar', encode: { x: 'year', y: 'price' } }];
+  const senior1Series = [{ type: 'bar', encode: { x: 'year', y: 'amount' } }];
 
   const senior2Data = saleOriginData.reduce((result: any, current) => {
     const year = dayjs(current.time).format('YYYY');
@@ -61,7 +61,7 @@ export default function Index () {
     return { type: 'bar', encode: { x: 'year', y: i.group } };
   });
 
-  console.log('senior', senior2Data);
+  console.log('senior', {senior1Data,senior2Data});
   return (
     <div>
       <h2>销售公司有 A,B,C 销售小组，公司有甲乙丙三种产品</h2>
@@ -85,6 +85,17 @@ function SeniorCard ({ data, series, xAxis, yAxis }: any) {
 
   useEffect(() => {
     const chart = echarts.init(divRef.current!, '',);
+    console.log('shenjo 11',{
+      // dataSet
+      xAxis: xAxis || { type: 'category' },
+      yAxis: yAxis || {},
+      // tooltip:{},
+      // legend:{},
+      dataset: {
+        source: data
+      },
+      series
+    })
     chart.setOption({
       // dataSet
       xAxis: xAxis || { type: 'category' },
