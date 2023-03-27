@@ -4,6 +4,7 @@ import styles from './index.module.less';
 import PieChart from './pie-chart';
 import { useEffect, useRef } from 'react';
 import { text } from 'stream/consumers';
+import ScatterChart from './scatter-chart';
 
 function statisticsHighlightResult () {
   const arr = Array.from(document.querySelectorAll('span[data-highligh-result]'));
@@ -198,7 +199,7 @@ export default function LearnEcharts () {
       </div>
       <div onClick={onClick}>匹配</div>
       <div onClick={clear}>清除</div>
-      {[BarCharts, LineChart, PieChart].map((Co, index) => (
+      {[BarCharts, LineChart, PieChart,ScatterChart].map((Co, index) => (
         <div key={index} className={styles['chart-item-wrapper']}>
           <Co />
         </div>
