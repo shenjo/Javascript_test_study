@@ -2,44 +2,11 @@ import styles from './index.module.less';
 import { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 import dayjs from 'dayjs';
-
-const employeeNames = [{ name: '员工A', group: '华南区' }, { name: '员工B', group: '华北区' }, { name: '员工C', group: '华中区' }];
-// 售卖的商品
-const productNames = [{ name: '产品甲', price: 100 }, { name: '产品乙', price: 150 }, { name: '产品丙', price: 200 }];
-const saleTimes = ['2019', '2020', '2021', '2022'];
-
-const saleItemHelper = () => {
-  const randomEmployee = employeeNames[Math.floor(Math.random() * (employeeNames.length))];
-  const randomProduct = productNames[Math.floor(Math.random() * (productNames.length))];
-  const randomYear = saleTimes[Math.floor(Math.random() * (saleTimes.length))];
-  return {
-    id: Math.random().toString().slice(1, 9),
-    userName: randomEmployee.name,
-    userGroup: randomEmployee.group,
-    productName: randomProduct.name,
-    time: dayjs(randomYear, 'YYYY').startOf('y').add(Math.floor(Math.random() * 365), 'd').add(Math.floor(Math.random() * 24 * 60 * 60), 'seconds').format('YYYY-MM-DD HH:mm:ss'),
-    price: randomProduct.price
-  };
-};
-const saleOriginData = new Array(100).fill(0).map(i => {
-
-  return saleItemHelper();
-});
-
-console.log(saleOriginData);
+import { employeeNames, saleOriginData, salesInfoPerYear } from '@/mock/mockSaleData';
 
 export default function Index () {
 
-  const senior1Data = saleOriginData.reduce((result: any, current) => {
-    const year = dayjs(current.time).format('YYYY');
-    const record = result.find((i: any) => i.year === year);
-    if (record) {
-      record.amount += current.price;
-    } else {
-      result.push({ year: year, amount: current.price });
-    }
-    return result;
-  }, []);
+  const senior1Data = salesInfoPerYear
 
   const senior1Series = [{ type: 'bar', encode: { x: 'year', y: 'amount' } }];
 

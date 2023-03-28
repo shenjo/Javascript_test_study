@@ -7,18 +7,44 @@ export default function LineChart () {
   useEffect(() => {
     const chart = echarts.init(divRef.current!, '',);
     chart.setOption({
-      dataset: {
-        source: [
-          { label: 'A', count: 120, value: 20 },
-          { label: 'B', count: 2001, value: 50 },
-          { label: 'C', count: 150, value: 40 },
+      'tooltip': {},
+      'legend': {},
+      'dataset': {
+        'source': [
+          {
+            'year': 2019,
+            'amount': 200,
+            'name': '华南区'
+          },
+          {
+            'year': 2021,
+            'amount': 200,
+            'name': '华南区'
+          },
+          {
+            'year': 2020,
+            'amount': 100,
+            'name': '华南区'
+          },
+          {
+            'year': 2022,
+            'amount': 100,
+            'name': '华南区'
+          }
         ]
       },
-      xAxis: [{ type: 'category' }, { type: 'value' }],
-      yAxis: {},
-      series: [
-        { type: 'line', encode: { x: 'label', y: 'count' }, step: 'middle' },
-        { type: 'line', xAxisIndex: 1, encode: { x: 'value', y: 'count' } }
+      'xAxis': {
+        'type': 'time'
+      },
+      'yAxis': {},
+      'series': [
+        {
+          'type': 'line',
+          'encode': {
+            'x': 'year',
+            'y': 'amount'
+          },
+        },
       ]
     });
   }, []);
