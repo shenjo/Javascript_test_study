@@ -4,13 +4,14 @@ import type { EChartsType } from 'echarts';
 import styles from '../index.module.less';
 import { buildDataSource } from './utils/datasourceUtils';
 import { buildSeries } from './utils/seriesUtils';
+import { titleTransform } from '@/modules/chart-designer/components/utils/transformer';
 
 interface IChartProps {
   config: Omit<IChartItem, 'id'>;
 }
 
 export default function ChartRender (props: IChartProps) {
-  const { dimension, xAxisLabel, yAxisLabel, chartType, dataSource, xAxisType } = props.config;
+  const { dimension, xAxisLabel, yAxisLabel, chartType, dataSource, xAxisType, title } = props.config;
   const [chartData, setChartData] = useState<any>([]);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -53,6 +54,7 @@ export default function ChartRender (props: IChartProps) {
     const option = {
       tooltip: {},
       legend: {},
+      title: titleTransform(title),
       dataset: usedDataSource,
       xAxis: chartType === 'pie' ? { show: false } : { type: 'category' },
       yAxis: chartType === 'pie' ? { show: false } : {},

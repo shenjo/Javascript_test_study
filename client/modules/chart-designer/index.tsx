@@ -5,40 +5,38 @@ import styles from './index.module.less';
 
 export default function ChartDesigner () {
 
-
-  const [options,setOptions] = useState<any>({
-    "chartType": "line",
-    "xAxisLabel": "year",
-    "xAxisType": "category",
-    "yAxisLabel": "amount",
-    title:{
-      show:false,
-      text:'测试',
-      left:'center',
-      bottom:'center',
+  const [options, setOptions] = useState<any>({
+    'chartType': 'line',
+    'xAxisLabel': 'year',
+    'xAxisType': 'category',
+    'yAxisLabel': 'amount',
+    title: {
+      show: true,
+      text: '测试',
+      pos:'bottomCenter'
 
     },
-    "dataSource": [
+    'dataSource': [
       {
-        "year": "2022",
-        "amount": 4800
+        'year': '2022',
+        'amount': 4800
       },
       {
-        "year": "2019",
-        "amount": 2400
+        'year': '2019',
+        'amount': 2400
       },
       {
-        "year": "2020",
-        "amount": 4350
+        'year': '2020',
+        'amount': 4350
       },
       {
-        "year": "2021",
-        "amount": 3200
+        'year': '2021',
+        'amount': 3200
       }
     ]
   });
 
-  console.log(options)
+  console.log(options);
 
   return (
     <div className={styles['designer-root']}>

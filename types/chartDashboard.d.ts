@@ -19,6 +19,7 @@ interface IChartItem {
   chartType: string,
   xAxisType?: string
   dataIndex: 0,
+  title?: IChartTitle
   xAxisLabel: string,
   dimension?: string
   yAxisLabel: string,
@@ -29,6 +30,21 @@ interface IChartTitle {
   show: boolean;
   text: string;
   position: 'bottomCenter' | 'topCenter';
+}
+
+interface IChartLegend {
+  show: boolean;
+  type: 'scroll' | 'plain';
+  orient: 'horizontal' | 'vertical';
+}
+
+interface IChartXAxis {
+  show: boolean;
+  type: 'category' | 'value' | 'time';
+}
+
+interface IChartXAxis {
+  show: boolean;
 }
 
 interface IChartCommonConfig {
