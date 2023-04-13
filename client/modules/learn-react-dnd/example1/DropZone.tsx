@@ -15,27 +15,10 @@ const DropZone = () => {
   const [{ isOver, canDrop, dragObj }, drop] = useDrop({
     accept: 'FIELD',
     hover: (item: Dnd.IField, monitor) => {
-      // if (!canDrop) {
-      //   return;
-      // }
-      //
-      // const draggedFieldIndex = droppedFields.findIndex(field => field.id === item.id);
-      // const hoveredFieldIndex = droppedFields.findIndex(field => field.id === item.id);
-      // const isAbove = monitor.getClientOffset()!.y < hoveredFieldIndex * 40 + 20;
-      // if (draggedFieldIndex !== hoveredFieldIndex && draggedFieldIndex !== -1 && hoveredFieldIndex !== -1) {
-      //   const newFields = [...droppedFields];
-      //   newFields.splice(draggedFieldIndex, 1);
-      //   newFields.splice(isAbove ? hoveredFieldIndex : hoveredFieldIndex + 1, 0, item);
-      //   setDroppedFields(newFields);
-      // }
+
     },
     drop: (item, monitor) => {
-      // if (!canDrop) {
-      //   return;
-      // }
-      //
-      // const newFields = [...droppedFields, item];
-      // setDroppedFields(newFields);
+
     },
     collect: monitor => ({
       isOver: !!monitor.isOver(),
@@ -49,7 +32,6 @@ const DropZone = () => {
     if (!dragObj) {
       return;
     }
-    console.log(`shenjo isHover:${isOver}`);
     const index = sourceRef.current.findIndex(item => item.id == dragObj.id);
     if (isOver) {
       // 添加进dropField，

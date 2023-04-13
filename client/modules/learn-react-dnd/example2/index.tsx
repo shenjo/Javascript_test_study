@@ -16,9 +16,8 @@ const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div style={{ textAlign: 'center', width: '400px', margin: '40px auto' }}>
-        <div>最基本的拖拽例子</div>
-        <div>核心处理逻辑为：当左侧拖出来的item，hover在放置区时，将拖拽源数据放到最终的List里，当拖拽源超出放置源后，从List移除</div>
-        <div>所有逻辑都在 useEffect里，根据isOver标志做处理，不在useDrop的hover以及onDrop里处理</div>
+        <div>在例子1的基础上，加上了放置的时候可以在目标源上交换位置</div>
+        <div>这个要求，放置源上的每个Item也是允许作为放置源的</div>
       </div>
       <div className={styles.app}>
         <div className={styles.fields}>
