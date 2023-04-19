@@ -1,4 +1,5 @@
 declare module '*.less'
+declare module '*.jpeg'
 
 interface ChartSetting<T = any> {
   value: T;

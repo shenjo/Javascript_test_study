@@ -29,11 +29,13 @@ const DropZone = () => {
   const [{ isOver, canDrop, dragObj }, drop] = useDrop({
     accept: 'FIELD',
     collect: monitor => ({
-      isOver: !!monitor.isOver(),
-      canDrop: !!monitor.canDrop(),
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
       dragObj: monitor.getItem<Dnd.IField>(),
-
     }),
+    drop (dragItem, monitor) {
+      console.log('shenjo drop',);
+    }
   });
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const DropZone = () => {
     }
   }, [isOver, dragObj]);
 
-  // console.log('shenjo dropFields', droppedFields);
+  console.log('shenjo dropFields', isOver, dragObj, droppedFields);
 
   return (
     <div ref={drop} className={cx(styles.fields, isOver ? styles['dropable-hover'] : null)}>
