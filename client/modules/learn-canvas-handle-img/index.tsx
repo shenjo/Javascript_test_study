@@ -1,15 +1,98 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-function CanvasDrawing () {
-  const props = {
-    width: '400px',
-    height: '400px'
-  };
+interface CanvasDrawProps {
+  canvasWidth: number;
+  canvasHeight: number;
+}
+
+const CanvasDraw: React.FC<CanvasDrawProps> = ({ canvasWidth, canvasHeight }) => {
+  const [isPainting, setIsPainting] = useState(false);
+  const [undoList, setUndoList] = useState<string[]>([]);
+  const [redoList, setRedoList] = useState<string[]>([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imgRef = useRef<any>(null);
-  const isDrawingRef = useRef(false);
 
-  useEffect(() => {
+  const startPaint = () => {
+    setIsPainting(true);
+  };
+
+  const endPaint = () => {
+    setIsPainting(false);
+  };
+
+  const handlePaint = (event: any) => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return;
+    }
+    const context = canvas.getContext('2d');
+    if (!context) {
+      return;
+    }
+
+    // get the mouse position
+    const mouseX = event.nativeEvent.offsetX;
+    const mouseY = event.nativeEvent.offsetY;
+
+    if (isPainting && context) {
+      context.lineWidth = 5;
+      context.lineCap = 'round';
+      context.strokeStyle = 'black';
+      context.lineTo(mouseX, mouseY);
+      context.stroke();
+      context.beginPath();
+      context.moveTo(mouseX, mouseY);
+    }
+  };
+
+  const handleUndo = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return;
+    }
+    const context = canvas.getContext('2d');
+    if (!context) {
+      return;
+    }
+
+    if (undoList.length > 0) {
+      const lastPaint = undoList.pop();
+      if (lastPaint) {
+        redoList.push(canvas.toDataURL());
+        const img = new Image();
+        img.onload = () => {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          context.drawImage(img, 0, 0);
+        };
+        img.src = lastPaint;
+      }
+    }
+  };
+
+  const handleRedo = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return;
+    }
+    const context = canvas.getContext('2d');
+    if (!context) {
+      return;
+    }
+
+    if (redoList.length > 0) {
+      const lastUndo = redoList.pop();
+      if (lastUndo) {
+        undoList.push(canvas.toDataURL());
+        const img = new Image();
+        img.onload = () => {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          context.drawImage(img, 0, 0);
+        };
+        img.src = lastUndo;
+      }
+    }
+  };
+
+  useEffect(()=>{
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext('2d')!;
 
@@ -31,48 +114,22 @@ function CanvasDrawing () {
     ctx.strokeStyle = 'rgba(0, 0, 0, 1)';
     ctx.lineWidth = 10;
     ctx.lineCap = 'round';
-
-    // 注册鼠标事件
-    const handleMouseDown = (e: any) => {
-      isDrawingRef.current = true;
-      ctx.beginPath();
-      ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-    };
-
-    const handleMouseMove = (e: any) => {
-      if (isDrawingRef.current) {
-        ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-        ctx.stroke();
-      }
-    };
-
-    const handleMouseUp = (e: any) => {
-      isDrawingRef.current = false;
-    };
-
-    const handleMouseOut = (e: any) => {
-      isDrawingRef.current = false;
-    };
-
-    canvas.addEventListener('mousedown', handleMouseDown);
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mouseup', handleMouseUp);
-    canvas.addEventListener('mouseout', handleMouseOut);
-
-    // 清除事件监听器
-    return () => {
-      canvas.removeEventListener('mousedown', handleMouseDown);
-      canvas.removeEventListener('mousemove', handleMouseMove);
-      canvas.removeEventListener('mouseup', handleMouseUp);
-      canvas.removeEventListener('mouseout', handleMouseOut);
-    };
-  }, []);
+  },[])
 
   return (
-   <div>
-     <canvas ref={canvasRef} width={props.width} height={props.height}></canvas>
-   </div>
+    <div>
+      <canvas
+        ref={canvasRef}
+        width={canvasWidth}
+        height={canvasHeight}
+        onMouseDown={startPaint}
+        onMouseUp={endPaint}
+        onMouseMove={handlePaint}
+      />
+      <button onClick={handleUndo}>Undo</button>
+      <button onClick={handleRedo}>Redo</button>
+    </div>
   );
-}
+};
 
-export default CanvasDrawing;
+export default CanvasDraw;
