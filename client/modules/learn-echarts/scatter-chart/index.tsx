@@ -7,23 +7,39 @@ export default function ScatterChart () {
   useEffect(() => {
     const chart = echarts.init(divRef.current!, '',);
     chart.setOption({
-      dataset: {
+      dataset: [{
         source: [
-          { label: '周一', value: Number(Math.random().toString().slice(2, 4)) },
-          { label: '周二', value: Number(Math.random().toString().slice(2, 4)) },
-          { label: '周三', value: Number(Math.random().toString().slice(2, 4)) },
-          { label: '周四', value: Number(Math.random().toString().slice(2, 4)) },
-          { label: '周五', value: Number(Math.random().toString().slice(2, 4)) },
-          { label: '周六', value: Number(Math.random().toString().slice(2, 4)) },
+          { gender: '女', height: 165, weight: 55 },
+          { gender: '男', height: 177, weight: 72 },
+          { gender: '女', height: 158, weight: 48 },
+          { gender: '男', height: 182, weight: 85 },
+          { gender: '女', height: 163, weight: 52 },
+          { gender: '女', height: 170, weight: 60 },
         ]
-      },
-      xAxis: { type: 'category' },
-      yAxis: {},
-      series: [
-        { type: 'scatter' }
-      ]
+      },{
+        source:[
+          { gender: '男', height: 180, weight: 80 },
+          { gender: '女', height: 160, weight: 50 },
+          { gender: '男', height: 175, weight: 70 },
+          { gender: '男', height: 170, weight: 65 },
+        ]
+      }],
+      xAxis: { type: 'value' },
+      yAxis: { type: 'value' },
+      series: [{
+        datasetIndex:0,
+        type: 'scatter',
+        encode: { x: 'height', y: 'weight', itemName: 'gender' },
+
+      },{
+        datasetIndex:1,
+        type: 'scatter',
+        encode: { x: 'height', y: 'weight', itemName: 'gender' },
+
+      }]
     });
   }, []);
 
   return <div ref={divRef}></div>;
 }
+
